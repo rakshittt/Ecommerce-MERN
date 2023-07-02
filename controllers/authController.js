@@ -104,4 +104,14 @@ const jwt = require('jsonwebtoken');
   }
 }
 
-module.exports= {registerController ,loginController};
+const testController= async(req,res)=>{
+  try{
+      res.send("Protected Route")
+  }catch(err){
+    console.log(err);
+    res.send({err})
+  }
+  
+}
+
+module.exports= {registerController ,loginController, testController};
