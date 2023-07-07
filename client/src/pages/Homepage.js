@@ -1,15 +1,15 @@
-import React from 'react'
-import Layout from '../components/layout/layout'
+import React from "react";
+import Layout from "../components/layout/layout";
 
 const Homepage = () => {
   return (
     <>
-    <Layout>
+      <Layout title={"Home - Ecommerce App"}>
         {/* <Header/> */}
         <h1>Home Page</h1>
-    </Layout>
+      </Layout>
     </>
-  )
-}
+  );
+};
 
-export default Homepage
+export default Homepage;
