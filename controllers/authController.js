@@ -95,9 +95,10 @@ const loginController = async (req, res) => {
       user: {
         name: user.name,
         email: user.email,
-        phone: user.phoneNo
+        phone: user.phoneNo,
+        role:user.role
       },
-      token,
+      token, 
     });
   } catch (err) {
     console.log(err);
