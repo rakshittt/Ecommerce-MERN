@@ -6,12 +6,17 @@ import PageNotFound from "./pages/PageNotFound";
 import Policy from "./pages/Policy";
 import RegisterPage from "./pages/Auth/Register";
 import LoginPage from "./pages/Auth/Login";
+import Dashboard from "./pages/user/Dashboard";
+import PrivateRoute from "./components/Routes/Private";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/dashboard" element={<PrivateRoute />} >
+            <Route path="" element={<Dashboard />} />
+        </Route>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/About" element={<About />} />

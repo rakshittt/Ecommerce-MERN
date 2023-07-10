@@ -1,6 +1,9 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useState } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "../../context/auth";
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -8,12 +11,56 @@ const navigation = [
   { name: 'Register', href: '/register', current: false },
   { name: 'Log In', href: '/login', current: false },
 ]
+// const [ auth, setAuth]= useAuth();
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(' ')
+// }
 
 export default function Example() {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const navigate = useNavigate();
+
+  // const handleLogin = () => {
+  //   setIsLoggedIn(true);
+  // };
+
+  const [auth, setAuth] = useAuth();
+
+  const handleLogout = () => {
+    
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
+  };
+  // const navigation = [
+  //   { name: "Home", href: "/", current: true,  },
+  //   { name: "Category", href: "/category", current: false },
+  //   { name: "Register", href: "/register", current: false , condition :!isLoggedIn },
+  //   { name: "Login", href: "/login", current: false , condition :!isLoggedIn },
+  //   { name: "Logout", href: "/logout", current: false , condition :isLoggedIn },
+
+  // {isLoggedIn ? (
+  //   <button onClick={handleLogout}>Logout</button>
+  // ) : (
+  //   <button onClick={handleLogin}>Login</button>
+  // )}
+  // {
+  //   name: !auth.user ? "Logout" : "Login",
+  //   href: !auth.user ? "/logout" : "/login",
+  //   onClick: !auth.user ? { handleLogin } : { handleLogout },
+  //   // current: false,
+  // },
+  // { name: 'Log In', href: '/login', current: false },
+  // ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -46,19 +93,76 @@ export default function Example() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {/* {navigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium"
                         )}
-                        aria-current={item.current  ? 'page' : 'false'}
+                        aria-current={item.current ? "page" : "false"}
                       >
                         {item.name}
-                      </a>
-                    ))}
+                        {/* {item.name === "Login" && !isLoggedIn && (
+                          <button onClick={handleLogin}>Login</button>
+                        )} */}
+                    {/* {item.name === "Logout" && isLoggedIn && (
+                          <div>
+                            <p>Welcome, {auth.user.name}!</p>
+                            <button onClick={handleLogout}>Logout</button>
+                          </div>
+                        )} */}
+                    {/* </a>
+                    ))}  */}
+                    <a
+                      href="/"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Home
+                    </a>
+                    <a
+                      href="/category"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Category
+                    </a>
+                    {
+                    !auth.user ? (
+                      <>
+                        <a
+                          href="/register"
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                          Register
+                        </a>
+                        <a
+                          href="/login"
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                          Login
+                        </a>
+                      </>
+                    ):
+                     (
+                      <>
+                        <a
+                          href="/logout"
+                          onClick={handleLogout}
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                          Logout
+                        </a>
+                      </>
+                    )}
+
+                    {/* {isLoggedIn ? (
+                      <button onClick={handleLogout}>Logout</button>
+                    ) : (
+                      <button onClick={handleLogin}>Login</button>
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -97,7 +201,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Your Profile
                           </a>
@@ -107,9 +214,12 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
-                            Cart 
+                            Cart
                           </a>
                         )}
                       </Menu.Item>
@@ -117,7 +227,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Settings
                           </a>
@@ -127,7 +240,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Sign out
                           </a>
@@ -148,10 +264,12 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -161,6 +279,5 @@ export default function Example() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }
-
