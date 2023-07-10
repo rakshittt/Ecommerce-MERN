@@ -10,6 +10,7 @@ const RegisterPage = () => {
     phoneNo: "",
     email: "",
     password: "",
+    secret_key :""
   });
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, phoneNo, email, password} = formData;
+    const { name, phoneNo, email, password, secret_key} = formData;
     // Add logic to handle form submission here
     try {
       const res = await axios.post("/api/v1/auth/register", {
@@ -28,6 +29,7 @@ const RegisterPage = () => {
         phoneNo,
         email,
         password,
+        secret_key,
         
       });
       if (res && res.data.success) {
@@ -47,6 +49,7 @@ const RegisterPage = () => {
       phoneNo: "",
       email: "",
       password: "",
+      secret_key:"",
     });
   };
 
@@ -124,6 +127,24 @@ const RegisterPage = () => {
                 placeholder="Enter your password"
                 name="password"
                 value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="secret_key"
+              >
+                Secret Key
+              </label>
+              <input
+                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="secret_key"
+                type="password"
+                placeholder="Enter your Secret Key"
+                name="secret_key"
+                value={formData.secret_key}
                 onChange={handleChange}
                 required
               />

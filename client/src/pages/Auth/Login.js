@@ -33,7 +33,7 @@ const LoginPage = () => {
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
-        navigate( location.state||"/");
+        navigate(location.state || "/");
       } else {
         toast.error(res.data.message);
       }
@@ -93,12 +93,22 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex items-center justify-center">
-              <button
-                className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Log In
-              </button>
+              <div className="m-3">
+                <button
+                  className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  onClick={()=>{navigate("/forgot-password")}}
+                >
+                  Forgot Password
+                </button>
+              </div>
+              <div>
+                <button
+                  className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Log In
+                </button>
+              </div>
             </div>
           </form>
         </div>
